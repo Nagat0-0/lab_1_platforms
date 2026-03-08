@@ -2,22 +2,19 @@ using System;
 
 public class Person
 {
-    private string _firstName;
-    private string _lastName;
+    private string _firstName = null!;
+    private string _lastName = null!;
     private DateTime _birthDate;
 
     public Person(string firstName, string lastName, DateTime birthDate)
     {
-        _firstName = firstName;
-        _lastName = lastName;
-        _birthDate = birthDate;
+        FirstName = firstName;
+        LastName = lastName;
+        BirthDate = birthDate;
     }
 
-    public Person()
+    public Person(): this(firstName: "Невідомо", lastName:"Невідомо", new DateTime(1, 1, 1))
     {
-        _firstName = "Невідомо";
-        _lastName = "Невідомо";
-        _birthDate = new DateTime(2000, 1, 1);
     }
 
     public string FirstName
@@ -46,13 +43,7 @@ public class Person
         }
     }
 
-    public override string ToString()
-    {
-        return $"Person: {FirstName} {LastName}, Дата народження: {BirthDate.ToShortDateString()}";
-    }
+    public override string ToString() => $"Person: {FirstName} {LastName}, Дата народження: {BirthDate.ToShortDateString()}";
 
-    public virtual string ToShortString()
-    {
-        return $"{FirstName} {LastName}";
-    }
+    public virtual string ToShortString()=>$"{FirstName} {LastName}";
 }

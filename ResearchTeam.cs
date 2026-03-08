@@ -2,28 +2,23 @@ using System;
 
 public class ResearchTeam
 {
-    private string _researchTopic;
-    private string _organization;
+    private string _researchTopic = null!;
+    private string _organization = null!;
     private int _registrationNumber;
     private TimeFrame _duration;
-    private Paper[] _publications;
+    private Paper[] _publications  = null!;
 
     public ResearchTeam(string researchTopic, string organization, int registrationNumber, TimeFrame duration)
     {
-        _researchTopic = researchTopic;
-        _organization = organization;
-        _registrationNumber = registrationNumber;
-        _duration = duration;
-        _publications = new Paper[0]; 
+        ResearchTopic = researchTopic;
+        Organization = organization;
+        RegistrationNumber = registrationNumber;
+        Duration = duration;
+        Publications = new Paper[0]; 
     }
 
-    public ResearchTeam()
-    {
-        _researchTopic = "Невідома тема";
-        _organization = "Невідома організація";
-        _registrationNumber = 0;
-        _duration = TimeFrame.Year;
-        _publications = new Paper[0];
+    public ResearchTeam() : this("Невідома тема", "Невідома організація", 0, TimeFrame.Year) 
+    { 
     }
 
     public string ResearchTopic
@@ -78,18 +73,17 @@ public class ResearchTeam
         }
     }
 
-    public bool this[TimeFrame index]
-    {
-        get
-        {
-            return _duration == index;
-        }
-    }
+    public bool this[TimeFrame index] => Duration == index;
 
     public void AddPapers(params Paper[] newPapers)
     {
         if (newPapers == null || newPapers.Length == 0) return;
 
+        if (_publications == null || _publications.Length == 0) {
+            _publications = newPapers;
+            return;
+        }
+        
         int oldLength = _publications.Length;
 
         Paper[] updatedPapers = new Paper[oldLength + newPapers.Length];
@@ -106,7 +100,6 @@ public class ResearchTeam
 
         _publications = updatedPapers;
     }
-
     public override string ToString()
     {
         string info = $"Дослідження: '{ResearchTopic}' ({Organization}), Реєстр. №: {RegistrationNumber}, Тривалість: {Duration}\nСписок публікацій:\n";
@@ -125,8 +118,5 @@ public class ResearchTeam
         return info;
     }
 
-    public virtual string ToShortString()
-    {
-        return $"Дослідження: '{ResearchTopic}' ({Organization}), Реєстр. №: {RegistrationNumber}, Тривалість: {Duration}";
-    }
+    public virtual string ToShortString() => $"Дослідження: '{ResearchTopic}' ({Organization}), Реєстр. №: {RegistrationNumber}, Тривалість: {Duration}";
 }

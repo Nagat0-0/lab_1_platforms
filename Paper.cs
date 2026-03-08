@@ -11,15 +11,9 @@ public class Paper
         PublicationDate = publicationDate;
     }
 
-    public Paper()
-    {
-        Title = "Без назви";
-        Author = new Person();
-        PublicationDate = DateTime.Now;
+    public Paper(): this("Без назви", new Person(), DateTime.Now) 
+    { 
     }
 
-    public override string ToString()
-    {
-        return $"Публікація: '{Title}', Автор: {Author.ToShortString()}, Дата: {PublicationDate.ToShortDateString()}";
-    }
+    public override string ToString() => $"Публікація: '{Title}', Автор: {Author.ToShortString()}, Дата: {PublicationDate.ToShortDateString()}";
 }
