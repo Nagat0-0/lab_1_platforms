@@ -92,13 +92,47 @@ class Program
             }
         }
 
-        Paper[][] arrayJagged = new Paper[nRows][];
-        for (int i = 0; i < nRows; i++)
+        int jaggedRows = 0;
+        int elementsLeft = totalElements;
+        int currentStep = 1;
+        int lastRowLength = 0;
+
+        while (elementsLeft > 0)
         {
-            arrayJagged[i] = new Paper[nColumns]; 
-            for (int j = 0; j < nColumns; j++)
+            jaggedRows++;
+            if (elementsLeft >= currentStep)
+            {
+                lastRowLength = currentStep;
+                elementsLeft -= currentStep;
+                currentStep++;
+            }
+            else
+            {
+                lastRowLength = elementsLeft;
+                elementsLeft = 0; 
+            }
+        }
+
+        Paper[][] arrayJagged = new Paper[jaggedRows][];
+
+        for (int i = 0; i < jaggedRows - 1; i++)
+        {
+            int len = i + 1;
+            arrayJagged[i] = new Paper[len];
+            
+            for (int j = 0; j < len; j++)
             {
                 arrayJagged[i][j] = new Paper();
+            }
+        }
+
+        if (jaggedRows > 0)
+        {
+            arrayJagged[jaggedRows - 1] = new Paper[lastRowLength];
+            
+            for (int j = 0; j < lastRowLength; j++)
+            {
+                arrayJagged[jaggedRows - 1][j] = new Paper();
             }
         }
 
@@ -125,9 +159,9 @@ class Program
 
 
         int startJagged = Environment.TickCount;
-        for (int i = 0; i < nRows; i++)
+        for (int i = 0; i < arrayJagged.Length; i++)
         {
-            for (int j = 0; j < nColumns; j++)
+            for (int j = 0; j < arrayJagged[i].Length; j++) 
             {
                 arrayJagged[i][j].Title = "Test title";
             }
