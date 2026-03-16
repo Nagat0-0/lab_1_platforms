@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 public class ResearchTeam
 {
@@ -102,20 +103,22 @@ public class ResearchTeam
     }
     public override string ToString()
     {
-        string info = $"Дослідження: '{ResearchTopic}' ({Organization}), Реєстр. №: {RegistrationNumber}, Тривалість: {Duration}\nСписок публікацій:\n";
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine($"Дослідження: '{ResearchTopic}' ({Organization}), Реєстр. №: {RegistrationNumber}, Тривалість: {Duration}");
+        sb.AppendLine("Список публікацій:");
         
         if (_publications.Length == 0)
         {
-            info += "  Публікацій ще немає.\n";
+            sb.AppendLine("  Публікацій ще немає.");
         }
         else
         {
             foreach (Paper p in _publications) 
             {
-                info += $"  - {p.ToString()}\n";
+                sb.AppendLine($"  - {p.ToString()}");
             }
         }
-        return info;
+        return sb.ToString();
     }
 
     public virtual string ToShortString() => $"Дослідження: '{ResearchTopic}' ({Organization}), Реєстр. №: {RegistrationNumber}, Тривалість: {Duration}";
